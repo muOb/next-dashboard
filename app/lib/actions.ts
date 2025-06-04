@@ -1,5 +1,4 @@
 "use server";
-import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import postgres from "postgres";
@@ -57,6 +56,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
+    console.error("Database Error:", error);
     return {
       message: "Database Error: Failed to Create Invoice.",
     };
@@ -99,6 +99,7 @@ export async function updateInvoice(
       WHERE id = ${id}
     `;
   } catch (error) {
+    console.log(error);
     return { message: "Database Error: Failed to Update Invoice." };
   }
 
